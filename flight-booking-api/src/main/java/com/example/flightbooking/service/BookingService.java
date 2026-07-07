@@ -51,4 +51,26 @@ public class BookingService {
         bookings.put(booking.getId(), booking);
         return booking;
     }
+
+    public void cancelBooking(String bookingId) {
+        Booking booking = bookings.get(bookingId);
+        if (booking == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Booking not found");
+        }
+
+        synchronized (booking) {
+            if (booking.getStatus() == BookingStatus.CANCELLED) {
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Booking is already cancelled");
+            }
+
+            Flight flight = flightRepository.findByFlightNumber(booking.getFlightNumber())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Flight not found for booking"));
+
+            synchronized (flight) {
+                flight.setAvailableSeats(flight.getAvailableSeats() + booking.getSeatsBooked());
+            }
+
+            booking.setStatus(BookingStatus.CANCELLED);
+        }
+    }
 }

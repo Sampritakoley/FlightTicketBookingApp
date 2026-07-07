@@ -27,4 +27,10 @@ public class BookingController {
         );
         return ResponseEntity.status(HttpStatus.CREATED).body(booking);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> cancelBooking(@PathVariable String id) {
+        bookingService.cancelBooking(id);
+        return ResponseEntity.noContent().build();
+    }
 }
