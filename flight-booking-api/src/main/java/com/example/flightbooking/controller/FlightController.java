@@ -1,12 +1,13 @@
 package com.example.flightbooking.controller;
 
+import com.example.flightbooking.exception.DuplicateFlightException;
+import com.example.flightbooking.exception.FlightNotFoundException;
 import com.example.flightbooking.model.Flight;
 import com.example.flightbooking.repository.FlightRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/api/flights")
@@ -26,13 +27,13 @@ public class FlightController {
         
         return flightRepository.save(flight)
                 .map(saved -> ResponseEntity.status(HttpStatus.CREATED).body(saved))
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.CONFLICT, "Flight already exists"));
+                .orElseThrow(() -> new DuplicateFlightException("Flight already exists"));
     }
 
     @GetMapping("/{flightNumber}")
     public ResponseEntity<Flight> getFlight(@PathVariable String flightNumber) {
         return flightRepository.findByFlightNumber(flightNumber)
                 .map(ResponseEntity::ok)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Flight not found"));
+                .orElseThrow(() -> new FlightNotFoundException("Flight not found"));
     }
 }
