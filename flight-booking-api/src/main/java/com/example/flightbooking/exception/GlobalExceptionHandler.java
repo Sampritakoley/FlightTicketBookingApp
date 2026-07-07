@@ -6,7 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +16,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({FlightNotFoundException.class, BookingNotFoundException.class})
     public ResponseEntity<ErrorResponse> handleNotFoundException(RuntimeException ex) {
         ErrorResponse response = new ErrorResponse(
-                LocalDateTime.now(),
+                Instant.now(),
                 HttpStatus.NOT_FOUND.value(),
                 HttpStatus.NOT_FOUND.getReasonPhrase(),
                 ex.getMessage(),
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler({DuplicateFlightException.class, NoSeatsAvailableException.class, BookingAlreadyCancelledException.class})
     public ResponseEntity<ErrorResponse> handleConflictException(RuntimeException ex) {
         ErrorResponse response = new ErrorResponse(
-                LocalDateTime.now(),
+                Instant.now(),
                 HttpStatus.CONFLICT.value(),
                 HttpStatus.CONFLICT.getReasonPhrase(),
                 ex.getMessage(),
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
                 errors.put(error.getField(), error.getDefaultMessage()));
 
         ErrorResponse response = new ErrorResponse(
-                LocalDateTime.now(),
+                Instant.now(),
                 HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
                 "Validation failed",

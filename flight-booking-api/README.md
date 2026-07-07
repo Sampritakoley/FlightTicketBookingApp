@@ -129,7 +129,7 @@ Cancelling releases the seats back to the flight. Unknown booking ID →
   "single instance, no DB required" constraint.
 - **Cancellation** — soft delete (status flips to `CANCELLED`), seats are
   returned to the flight's pool. Bookings are never physically removed, to
-  preserve a basic audit trail.
+  preserve a basic audit trail. (Note on HTTP semantics: while `DELETE` is used here out of convention for cancellation, it performs a soft-delete rather than a resource removal; in some strict REST APIs this might be modelled as `PATCH /api/bookings/{id}/status` or `POST /api/bookings/{id}/cancel`.)
 
 ## How This Was Built
 

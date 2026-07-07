@@ -10,7 +10,7 @@ import com.example.flightbooking.model.Flight;
 import com.example.flightbooking.repository.FlightRepository;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -47,7 +47,7 @@ public class BookingService {
                 passengerName,
                 seatsRequested,
                 BookingStatus.CONFIRMED,
-                LocalDateTime.now()
+                Instant.now()
         );
         
         bookings.put(booking.getId(), booking);

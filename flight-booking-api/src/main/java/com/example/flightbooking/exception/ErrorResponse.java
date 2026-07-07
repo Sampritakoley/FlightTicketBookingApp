@@ -2,12 +2,12 @@ package com.example.flightbooking.exception;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Map;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
-    private LocalDateTime timestamp;
+    private Instant timestamp;
     private int status;
     private String error;
     private String message;
@@ -16,7 +16,7 @@ public class ErrorResponse {
     public ErrorResponse() {
     }
 
-    public ErrorResponse(LocalDateTime timestamp, int status, String error, String message, Map<String, String> validationErrors) {
+    public ErrorResponse(Instant timestamp, int status, String error, String message, Map<String, String> validationErrors) {
         this.timestamp = timestamp;
         this.status = status;
         this.error = error;
@@ -24,11 +24,11 @@ public class ErrorResponse {
         this.validationErrors = validationErrors;
     }
 
-    public LocalDateTime getTimestamp() {
+    public Instant getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setTimestamp(Instant timestamp) {
         this.timestamp = timestamp;
     }
 

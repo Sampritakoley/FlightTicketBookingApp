@@ -1,6 +1,6 @@
 package com.example.flightbooking.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public class Booking {
     private String id;
@@ -8,12 +8,12 @@ public class Booking {
     private String passengerName;
     private Integer seatsBooked;
     private BookingStatus status;
-    private LocalDateTime createdAt;
+    private Instant createdAt;
 
     public Booking() {
     }
 
-    public Booking(String id, String flightNumber, String passengerName, Integer seatsBooked, BookingStatus status, LocalDateTime createdAt) {
+    public Booking(String id, String flightNumber, String passengerName, Integer seatsBooked, BookingStatus status, Instant createdAt) {
         this.id = id;
         this.flightNumber = flightNumber;
         this.passengerName = passengerName;
@@ -62,11 +62,11 @@ public class Booking {
         this.status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 }

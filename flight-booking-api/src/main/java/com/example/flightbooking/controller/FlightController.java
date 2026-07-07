@@ -1,5 +1,6 @@
 package com.example.flightbooking.controller;
 
+import com.example.flightbooking.dto.FlightRequest;
 import com.example.flightbooking.exception.DuplicateFlightException;
 import com.example.flightbooking.exception.FlightNotFoundException;
 import com.example.flightbooking.model.Flight;
@@ -20,10 +21,11 @@ public class FlightController {
     }
 
     @PostMapping
-    public ResponseEntity<Flight> createFlight(@Valid @RequestBody Flight flight) {
-        if (flight.getAvailableSeats() == null) {
-            flight.setAvailableSeats(flight.getTotalSeats());
-        }
+    public ResponseEntity<Flight> createFlight(@Valid @RequestBody FlightRequest request) {
+        Flight flight = new Flight();
+        flight.setFlightNumber(request.getFlightNumber());
+        flight.setTotalSeats(request.getTotalSeats());
+        flight.setAvailableSeats(request.getTotalSeats());
         
         return flightRepository.save(flight)
                 .map(saved -> ResponseEntity.status(HttpStatus.CREATED).body(saved))
